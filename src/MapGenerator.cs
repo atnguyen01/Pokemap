@@ -327,7 +327,7 @@ namespace pokemongenerator
       if(grass_sand == 0){
         groundtype = 94; //sand
       }
-      Console.WriteLine(groundtype);
+      //Console.WriteLine(groundtype);
       switch (categorie)
       {
         case 0: start_id = 147; column = 4; row = 4; y_step = 4; x_step = 1; break;
@@ -550,20 +550,22 @@ namespace pokemongenerator
           int x = line.tiles.IndexOf(tile);
           if (GetTileId(x, y) == 89)
           {
-            if (GetTileId(x-1, y -1) == 34 && GetTileId(x, y -1) == 89 && GetTileId(x-1, y) == 89 ){
+            if (GetTileId(x-1, y -1) == 34 && GetTileId(x, y -1) == 89 && GetTileId(x-1, y) == 89 && GetTileId(x - 1, y - 1) != 89)
+                {
               SetTile(x-1, y - 1, 108);
             }
-            if (GetTileId(x+1, y -1) == 34 && GetTileId(x, y -1) == 89 && GetTileId(x+1, y) == 89 ){
+            if (GetTileId(x+1, y -1) == 34 && GetTileId(x, y -1) == 89 && GetTileId(x+1, y) == 89 && GetTileId(x + 1, y - 1) != 89)
+                {
               SetTile(x+1, y - 1, 107);
             }
-            if (GetTileId(x-1, y +1) == 34 && GetTileId(x, y +1) == 89 && GetTileId(x-1, y) == 89 ){
+            if (GetTileId(x-1, y +1) == 34 && GetTileId(x, y +1) == 89 && GetTileId(x-1, y) == 89 && GetTileId(x - 1, y + 1) != 89)
+                {
               SetTile(x-1, y + 1, 87);
             }
-            if (GetTileId(x+1, y +1) == 34 && GetTileId(x, y +1) == 89 && GetTileId(x+1, y) == 89 ){
+            if (GetTileId(x+1, y +1) == 34 && GetTileId(x, y +1) == 89 && GetTileId(x+1, y) == 89 && GetTileId(x + 1, y + 1) != 89)
+                {
               SetTile(x+1, y + 1, 86);
             }
-
-
           }
         });
       });
@@ -574,6 +576,10 @@ namespace pokemongenerator
         line.tiles.ForEach((tile) =>
         {
           int x = line.tiles.IndexOf(tile);
+            int bot = GetTileId(x, y + 1);
+            int top = GetTileId(x, y - 1);
+            int left = GetTileId(x - 1, y);
+            int right = GetTileId(x + 1, y);
           if (GetTileId(x, y) == 89)
           {
             if (GetTileId(x + 1, y) == 34)
@@ -593,8 +599,25 @@ namespace pokemongenerator
               SetTile(x, y - 1, 68);
             }
 
+            //outer borders
+            if ((GetTileId(x - 1, y) == 88) && ((GetTileId(x, y - 1) == 34) || (GetTileId(x, y - 1) == 68)) && (GetTileId(x, y - 1) > 0))
+            {
+              SetTile(x - 1, y - 1, 67);
+            }
+            if ((GetTileId(x, y + 1) == 110) && ((GetTileId(x - 1, y) == 34) || (GetTileId(x - 1, y) == 88)) && (GetTileId(x - 1, y) > 0))
+            {
+              SetTile(x - 1, y + 1, 109);
+            }
+            if ((GetTileId(x, y - 1) == 68) && ((GetTileId(x + 1, y) == 34) || (GetTileId(x + 1, y) == 90)) && (GetTileId(x + 1, y) > 0))
+            {
+              SetTile(x + 1, y - 1, 69);
+            }
+            if ((GetTileId(x + 1, y) == 90) && ((GetTileId(x, y + 1) == 34) || (GetTileId(x, y + 1) == 110)) && (GetTileId(x, y + 1) > 0))
+            {
+              SetTile(x + 1, y + 1, 111);
+            }
+            }
 
-          }
         });
       });
     }
