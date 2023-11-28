@@ -374,8 +374,11 @@ namespace pokemongenerator
       step.X = x + x_step;
       step.Y = y + y_step + 1;
       doorSteps.Add(step);
-      SetTile((int)step.X, (int)step.Y, 89);
-      SetTile((int)step.X, (int)step.Y - 1, 89);
+            if (GetTileId((int)step.X, (int)step.Y + 1) != 94)
+            {
+                SetTile((int)step.X, (int)step.Y, 89);
+                SetTile((int)step.X, (int)step.Y - 1, 89);
+            }
       return true; // if it's impossible to put house
     }
 
@@ -582,7 +585,24 @@ namespace pokemongenerator
             int right = GetTileId(x + 1, y);
           if (GetTileId(x, y) == 89)
           {
-            if (GetTileId(x + 1, y) == 34)
+                // connect paths seperated by one tile
+                if ((GetTileId(x + 1, y) != 89) && (GetTileId(x + 2, y) == 89) && (GetTileId(x + 1, y) > 0) && (GetTileId(x + 2, y) > 0) && (GetTileId(x + 1, y) != 164) && (GetTileId(x + 1, y) != 165))
+                {
+                    SetTile(x + 1, y, 89);
+                }
+                if ((GetTileId(x - 1, y) != 89) && (GetTileId(x - 2, y) == 89) && (GetTileId(x - 1, y) > 0) && (GetTileId(x - 2, y) > 0) && (GetTileId(x - 1, y) != 164) && (GetTileId(x - 1, y) != 165))
+                {
+                    SetTile(x - 1, y, 89);
+                }
+                if ((GetTileId(x, y + 1) != 89) && (GetTileId(x, y + 2) == 89) && (GetTileId(x, y + 1) > 0) && (GetTileId(x, y + 2) > 0) && (GetTileId(x, y + 1) != 125))
+                {
+                    SetTile(x, y + 1, 89);
+                }
+                if ((GetTileId(x, y - 1) != 89) && (GetTileId(x, y - 2) == 89) && (GetTileId(x, y - 1) > 0) && (GetTileId(x, y - 2) > 0) && (GetTileId(x, y - 1) != 125))
+                {
+                    SetTile(x, y - 1, 89);
+                }
+                if (GetTileId(x + 1, y) == 34)
             {
               SetTile(x + 1, y, 90);
             }
